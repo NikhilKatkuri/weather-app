@@ -1,9 +1,11 @@
+import Navbar from "@/components/Navbar";
 import { useTime } from "@/context/useTime";
 import { imagesType } from "@/types/images";
-import { Dimensions, Image, StatusBar, Text, View } from "react-native";
+import { heightPercentage, widthPercentage } from "@/utils/useDimension";
+import { Image, StatusBar, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
-  const { width, height } = Dimensions.get("screen");
   const { bgImage } = useTime();
   const images: imagesType = {
     morning: require("../assets/images/bg-morning.png"),
@@ -30,8 +32,8 @@ export default function Index() {
             source={images[bgImage]}
             style={{
               flex: 1,
-              width: width,
-              height: height,
+              width: widthPercentage(1),
+              height: heightPercentage(1),
               position: "absolute",
               top: 0,
               left: 0,
@@ -40,7 +42,22 @@ export default function Index() {
             }}
           />
         )}
-        <Text></Text>
+        <SafeAreaView>
+          <View
+            style={{
+              paddingHorizontal: 40,
+              paddingVertical: 20,
+              borderRadius: 10,
+              backgroundColor: "#00000080",
+              flex: 1,
+              width: "100%",
+              alignItems: "center",
+              overflowX: "hidden",
+            }}
+          >
+            <Navbar />
+          </View>
+        </SafeAreaView>
       </View>
     </>
   );
