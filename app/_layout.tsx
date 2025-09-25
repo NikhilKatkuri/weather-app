@@ -1,3 +1,4 @@
+import { GeoProvider } from "@/context/useGeo";
 import { TimeProvider } from "@/context/useTime";
 import { WeatherProvider } from "@/context/useWeather";
 import { useFonts } from "expo-font";
@@ -29,6 +30,8 @@ export default function RootLayout() {
     <>
       <TimeProvider>
         <WeatherProvider>
+          <GeoProvider>
+
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen
@@ -36,6 +39,7 @@ export default function RootLayout() {
               options={{ headerShown: false }}
             />
           </Stack>
+          </GeoProvider>
         </WeatherProvider>
       </TimeProvider>
     </>

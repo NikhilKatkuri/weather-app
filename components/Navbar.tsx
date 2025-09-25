@@ -28,8 +28,7 @@ const Navbar = () => {
       </Text>
       <View>
         <TouchableWithoutFeedback
-          onPress={() => {
-            console.log("search");
+          onPress={() => { 
             router.push("/search");
           }}
         >

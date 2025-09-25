@@ -31,7 +31,7 @@ export const GeoProvider = ({ children }: { children: ReactNode }) => {
 
         const geoRes = await fetch(`http://ip-api.com/json/${publicIP}`);
         const geoJson = await geoRes.json();
-        setLocation(geoJson); 
+        setLocation(geoJson);  
       } catch (error) {
         console.error("Error fetching IP/Geo:", error);
       }

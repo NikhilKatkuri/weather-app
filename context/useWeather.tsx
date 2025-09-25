@@ -16,7 +16,7 @@ interface WeatherContextType {
 
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
 const baseUrl = "https://api.openweathermap.org/data/2.5/";
-// const ApiKey = process.env.API_KEY;
+const ApiKey = process.env.EXPO_PUBLIC_API_KEY;
 export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   const [value, setValue] = useState<ValueType>("");
 
@@ -25,7 +25,7 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     long: string | number
   ): Promise<WeatherDataUsingIP | undefined> => {
     try {
-      const url = `${baseUrl}weather?lat=${lat}&lon=${long}&appid=268740cc2aa37e59001c0954c860f9de&units=metric`;
+      const url = `${baseUrl}weather?lat=${lat}&lon=${long}&appid=${ApiKey}&units=metric`;
       const res = await fetch(url);
       const date = await res.json();
       return date as WeatherDataUsingIP;

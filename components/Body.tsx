@@ -1,105 +1,15 @@
 import { useGeo } from "@/context/useGeo";
-import { useWeather } from "@/context/useWeather";
+import { useTime } from "@/context/useTime";
 import { WeatherDataUsingIP } from "@/types/weather";
 import { convertUnixToLocal } from "@/utils/converter";
 import { widthPercentage } from "@/utils/useDimension";
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import { Image, Text, View } from "react-native";
 
-type timeLineType = {
-  day: string;
-  month: string;
-  date: number;
-  year: number;
-  timeLine: string;
-};
-
-type timeType = {
-  hours: number;
-  minutes: number;
-};
-const Body = () => {
+const Body = ({data}:{data: WeatherDataUsingIP | undefined}) => {
   const { location } = useGeo();
-  const days = useMemo(
-    () => [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ],
-    []
-  );
-  const months = useMemo(
-    () => [
-      "january",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ],
-    []
-  );
-
-  const [timeLine, setTimeline] = useState<timeLineType>({
-    day: "",
-    month: "",
-    year: 0,
-    date: 0,
-    timeLine: "",
-  });
-  const [time, setTime] = useState<timeType>({
-    hours: new Date().getHours(),
-    minutes: new Date().getMinutes(),
-  });
-
-  useEffect(() => {
-    const date = new Date();
-    const day = days[date.getDay()];
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    setTimeline({
-      day: day,
-      date: date.getDate(),
-      month: month,
-      year: year,
-      timeLine: `${day} , ${month} ${year}`,
-    });
-  }, [days, months]);
-
-  useEffect(() => {
-    const get = () => {
-      const date = new Date();
-      setTime({
-        hours: date.getHours(),
-        minutes: date.getMinutes(),
-      });
-    };
-    get();
-    const interval = setInterval(get, 60 * 60);
-    return () => clearInterval(interval);
-  }, []);
-
-  const { getWeatherUsingIP } = useWeather();
-  const [data, setData] = useState<WeatherDataUsingIP | undefined>(undefined);
-  useEffect(() => {
-    const [lat, long] = [location?.lat, location?.lon];
-    (async () => {
-      if (lat !== undefined && long !== undefined) {
-        const data = await getWeatherUsingIP(lat, long);
-        setData(data);
-      }
-    })();
-  }, [getWeatherUsingIP, location?.lat, location?.lon]);
+  const { timeLine, time } = useTime();
+ 
   return (
     <View
       style={{
@@ -204,7 +114,7 @@ const Body = () => {
         >
           <Image
             source={require("../assets/images/humidity.png")}
-            style={{ width: 32, height: 32  }}
+            style={{ width: 32, height: 32 }}
           />
           <Text
             style={{ fontFamily: "PoppinsMedium", fontSize: 12, color: "#000" }}
@@ -308,7 +218,6 @@ const Body = () => {
             })()}
           </Text>
         </View>
-         
       </View>
     </View>
   );
