@@ -2,11 +2,11 @@
 import { GeoData } from "@/types/geo";
 import * as Network from "expo-network";
 import React, {
-     createContext,
-     ReactNode,
-     useContext,
-     useEffect,
-     useState,
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
 } from "react";
 
 interface GeoContextType {
@@ -31,8 +31,7 @@ export const GeoProvider = ({ children }: { children: ReactNode }) => {
 
         const geoRes = await fetch(`http://ip-api.com/json/${publicIP}`);
         const geoJson = await geoRes.json();
-        setLocation(geoJson);
-        console.log(geoJson);
+        setLocation(geoJson); 
       } catch (error) {
         console.error("Error fetching IP/Geo:", error);
       }

@@ -1,4 +1,5 @@
 import { TimeProvider } from "@/context/useTime";
+import { WeatherProvider } from "@/context/useWeather";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as Splash from "expo-splash-screen";
@@ -27,10 +28,15 @@ export default function RootLayout() {
   return (
     <>
       <TimeProvider>
-        <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="search/index" options={{ headerShown: false }} />
-        </Stack>
+        <WeatherProvider>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="search/index"
+              options={{ headerShown: false }}
+            />
+          </Stack>
+        </WeatherProvider>
       </TimeProvider>
     </>
   );
