@@ -40,7 +40,7 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/inter.ttf"]
+          "fonts": ["./assets/fonts/inter.ttf","./assets/fonts/Poppins-Regular.ttf","./assets/fonts/Poppins-SemiBold.ttf","./assets/fonts/Poppins-Medium.ttf","./assets/fonts/Poppins-Light.ttf"]
         }
       ]
     ],

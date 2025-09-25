@@ -1,25 +1,23 @@
-import { widthPercentage } from "@/utils/useDimension";
+import { useRouter } from "expo-router";
 import React from "react";
-import { Text, TouchableWithoutFeedback, View } from "react-native";
+import { Image, Text, TouchableWithoutFeedback, View } from "react-native";
 
 const Navbar = () => {
+  const router = useRouter();
   return (
     <View
       style={{
         height: 42,
-        width: widthPercentage(1),
-        paddingHorizontal: 20,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center",
-
+        justifyContent: "space-between", 
         //    borderRadius: 6,
         //    backgroundColor: "#fff",
       }}
     >
       <Text
         style={{
-          color: "#fffff299",
+          color: "#fff",
           width: "100%",
           fontSize: 19,
           fontWeight: 900,
@@ -29,18 +27,16 @@ const Navbar = () => {
         Weather-app
       </Text>
       <View>
-        <TouchableWithoutFeedback>
-          <Text
-            style={{
-              color: "#fffff299",
-              width: "100%",
-              fontSize: 19,
-              fontWeight: 900,
-              fontFamily: "Inter",
-            }}
-          >
-            S
-          </Text>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            console.log("search");
+            router.push("/search");
+          }}
+        >
+          <Image
+            source={require("../assets/images/search.png")}
+            style={{ height: 28, width: 28 }}
+          />
         </TouchableWithoutFeedback>
       </View>
     </View>
