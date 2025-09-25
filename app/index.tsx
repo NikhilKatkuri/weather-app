@@ -50,7 +50,7 @@ export default function Index() {
             }}
           >
             <Navbar />
-            <Body data={data} />
+            <Body location={location} data={data} />
           </View>
         </SafeAreaView>
       </View>

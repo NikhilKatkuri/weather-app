@@ -12,6 +12,9 @@ interface WeatherContextType {
     lat: string | number,
     long: string | number
   ) => Promise<WeatherDataUsingIP | undefined>;
+  getWeatherUsingQueryPlace: (
+    query: string
+  ) => Promise<WeatherDataUsingIP | undefined>;
 }
 
 const WeatherContext = createContext<WeatherContextType | undefined>(undefined);
@@ -34,8 +37,26 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const getWeatherUsingQueryPlace = async (
+    query: string
+  ): Promise<WeatherDataUsingIP | undefined> => {
+    try {
+      const url = `${baseUrl}weather?q=${query}&appid=${ApiKey}&units=metric`;
+      console.log(url)
+      const res = await fetch(url);
+      if (!res.ok) return undefined;
+      if (res.status === 404) return await getWeatherUsingQueryPlace("india");
+      const data = await res.json();
+      return data as WeatherDataUsingIP;
+    } catch {
+      return undefined;
+    }
+  };
+
   return (
-    <WeatherContext.Provider value={{ value, setValue, getWeatherUsingIP }}>
+    <WeatherContext.Provider
+      value={{ value, setValue, getWeatherUsingIP, getWeatherUsingQueryPlace }}
+    >
       {children}
     </WeatherContext.Provider>
   );

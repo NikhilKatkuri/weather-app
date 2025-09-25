@@ -1,15 +1,20 @@
-import { useGeo } from "@/context/useGeo";
 import { useTime } from "@/context/useTime";
+import { GeoData } from "@/types/geo";
 import { WeatherDataUsingIP } from "@/types/weather";
 import { convertUnixToLocal } from "@/utils/converter";
 import { widthPercentage } from "@/utils/useDimension";
 import React from "react";
 import { Image, Text, View } from "react-native";
 
-const Body = ({data}:{data: WeatherDataUsingIP | undefined}) => {
-  const { location } = useGeo();
+const Body = ({
+  data,
+  location,
+}: {
+  data: WeatherDataUsingIP | undefined;
+  location: GeoData | undefined | null;
+}) => {
   const { timeLine, time } = useTime();
- 
+
   return (
     <View
       style={{

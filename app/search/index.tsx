@@ -1,17 +1,39 @@
 import Background from "@/components/background";
+import Body from "@/components/Body";
+import { useWeather } from "@/context/useWeather";
+import { GeoData } from "@/types/geo";
+import { WeatherDataUsingIP } from "@/types/weather";
 import { widthPercentage } from "@/utils/useDimension";
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function index() {
+export default function Index() {
+  const [query, setQuery] = useState<string>("");
+  const { getWeatherUsingQueryPlace } = useWeather();
+  const [data, setData] = useState<WeatherDataUsingIP | undefined | null>(null);
+  const [location, setLocation] = useState<GeoData | undefined>(undefined);
+  const handleSearch = async () => {
+    if (!query.trim()) return;
+    const result = await getWeatherUsingQueryPlace(query);
+    setData(result);
+    setLocation({
+      city: query,
+      country: result?.sys.country || "IN",
+      lat: 0,
+      lon: 0,
+      regionName: result?.sys.country || "IN",
+      query: query,
+    });
+  };
+
   return (
     <View style={{ flex: 1, alignItems: "flex-start" }}>
       <StatusBar barStyle="light-content" backgroundColor={"#ffffff00"} />
@@ -47,6 +69,8 @@ export default function index() {
           >
             <TextInput
               placeholder="Search"
+              value={query}
+              onChangeText={(text) => setQuery(text)}
               style={{ flex: 1, color: "rgb(71 85 105)" }}
             />
             <View
@@ -62,7 +86,7 @@ export default function index() {
                 shadowRadius: 1.41,
               }}
             >
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleSearch}>
                 <View>
                   <Image
                     source={require("../../assets/images/search.png")}
@@ -77,6 +101,39 @@ export default function index() {
             </View>
           </View>
           <View style={{ height: 16 }} />
+          {data === null ? (
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              <Image
+                source={require("../../assets/images/start-search.png")}
+                style={{ width: 300, height: 300 }}
+              />
+            </View>
+          ) : data === undefined ? (
+            <>
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                <Image
+                  source={require("../../assets/images/not-found.png")}
+                  style={{ width: 300, height: 300 }}
+                />
+              </View>
+            </>
+          ) : (
+            <Body data={data} location={location} />
+          )}
         </View>
       </SafeAreaView>
     </View>
