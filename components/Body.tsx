@@ -1,6 +1,7 @@
 import { useGeo } from "@/context/useGeo";
 import { useWeather } from "@/context/useWeather";
 import { WeatherDataUsingIP } from "@/types/weather";
+import { convertUnixToLocal } from "@/utils/converter";
 import { widthPercentage } from "@/utils/useDimension";
 import React, { useEffect, useMemo, useState } from "react";
 import { Image, Text, View } from "react-native";
@@ -203,7 +204,7 @@ const Body = () => {
         >
           <Image
             source={require("../assets/images/humidity.png")}
-            style={{ width: 32, height: 32 }}
+            style={{ width: 32, height: 32  }}
           />
           <Text
             style={{ fontFamily: "PoppinsMedium", fontSize: 12, color: "#000" }}
@@ -229,6 +230,85 @@ const Body = () => {
             {data?.wind.speed || 0} km/h
           </Text>
         </View>
+      </View>
+      <View style={{ height: 36 }} />
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          paddingVertical: 12,
+          // backgroundColor: "#ffffff90",
+          borderRadius: 10,
+          alignItems: "center",
+          paddingHorizontal: 22,
+          gap: 56,
+        }}
+      >
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+            gap: 4,
+          }}
+        >
+          <Image
+            source={require("../assets/images/sunrise.png")}
+            style={{ width: 32, height: 32 }}
+          />
+          <Text
+            style={{ fontFamily: "PoppinsMedium", fontSize: 12, color: "#fff" }}
+          >
+            {(() => {
+              const date = convertUnixToLocal(
+                data?.sys.sunrise || 0,
+                data?.timezone || 0
+              );
+
+              let hours = date.getUTCHours();
+              let minutes = date.getUTCMinutes();
+              const ampm = hours >= 12 ? "PM" : "AM";
+              hours = hours % 12 || 12; // convert 0 → 12 for midnight
+              const formattedHours = hours < 10 ? `0${hours}` : hours;
+              const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+              return `${formattedHours}:${formattedMinutes} ${ampm}`;
+            })()}
+          </Text>
+        </View>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+            gap: 4,
+          }}
+        >
+          <Image
+            source={require("../assets/images/sunset.png")}
+            style={{ width: 32, height: 32 }}
+          />
+          <Text
+            style={{ fontFamily: "PoppinsMedium", fontSize: 12, color: "#fff" }}
+          >
+            {(() => {
+              const date = convertUnixToLocal(
+                data?.sys.sunset || 0,
+                data?.timezone || 0
+              );
+
+              let hours = date.getUTCHours();
+              let minutes = date.getUTCMinutes();
+              const ampm = hours >= 12 ? "PM" : "AM";
+              hours = hours % 12 || 12; // convert 0 → 12 for midnight
+              const formattedHours = hours < 10 ? `0${hours}` : hours;
+              const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+
+              return `${formattedHours}:${formattedMinutes} ${ampm}`;
+            })()}
+          </Text>
+        </View>
+         
       </View>
     </View>
   );

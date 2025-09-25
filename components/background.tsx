@@ -36,8 +36,8 @@ const Background = () => {
           left: 0,
           width: widthPercentage(1),
           height: heightPercentage(1),
-          backgroundColor: "rgba(0,0,0,0.3)",
-          zIndex: -1,
+          backgroundColor: bgImage==="afternoon" ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0.53)",
+          zIndex: 0,
         }}
       />
     </>
