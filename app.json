@@ -17,7 +17,8 @@
         "foregroundImage": "./assets/images/app.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.nikhilorg.weatherapp"
     },
     "web": {
       "output": "static",
@@ -36,17 +37,17 @@
             "backgroundColor": "#000000"
           }
         }
-      ],
-      [
-        "expo-font",
-        {
-          "fonts": ["./assets/fonts/inter.ttf","./assets/fonts/Poppins-Regular.ttf","./assets/fonts/Poppins-SemiBold.ttf","./assets/fonts/Poppins-Medium.ttf","./assets/fonts/Poppins-Light.ttf"]
-        }
-      ]
+      ] 
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "ce4c3cf5-2ee5-45bc-8208-2d834e2f1a3b"
+      }
     }
   }
 }

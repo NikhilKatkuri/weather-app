@@ -22,15 +22,15 @@ export default function Index() {
   const [location, setLocation] = useState<GeoData | undefined>(undefined);
   const handleSearch = async () => {
     if (!query.trim()) return;
-    const result = await getWeatherUsingQueryPlace(query);
+    const result = await getWeatherUsingQueryPlace(query.trim());
     setData(result);
     setLocation({
-      city: query,
+      city: query.trim(),
       country: result?.sys.country || "IN",
       lat: 0,
       lon: 0,
       regionName: result?.sys.country || "IN",
-      query: query,
+      query: query.trim(),
     });
   };
 
@@ -101,22 +101,8 @@ export default function Index() {
             </View>
           </View>
           <View style={{ height: 16 }} />
-          {data === null ? (
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-              }}
-            >
-              <Image
-                source={require("../../assets/images/start-search.png")}
-                style={{ width: 300, height: 300 }}
-              />
-            </View>
-          ) : data === undefined ? (
-            <>
+          <View style={{ flex: 1, maxWidth: widthPercentage(1)-32, alignItems: "center", justifyContent: "center" }}>
+            {data === null ? (
               <View
                 style={{
                   flex: 1,
@@ -126,14 +112,30 @@ export default function Index() {
                 }}
               >
                 <Image
-                  source={require("../../assets/images/not-found.png")}
+                  source={require("../../assets/images/start-search.png")}
                   style={{ width: 300, height: 300 }}
                 />
               </View>
-            </>
-          ) : (
-            <Body data={data} location={location} />
-          )}
+            ) : data === undefined ? (
+              <>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                >
+                  <Image
+                    source={require("../../assets/images/not-found.png")}
+                    style={{ width: 300, height: 300 }}
+                  />
+                </View>
+              </>
+            ) : (
+              <Body data={data} location={location} />
+            )}
+          </View>
         </View>
       </SafeAreaView>
     </View>
